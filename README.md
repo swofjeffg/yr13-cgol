@@ -25,7 +25,8 @@ The seed would be;
 2-2:12-3:13-2:13-3:1
 ```
 
-To break it down, '22:1' means that column 2, row 2, is in state 1 (on), '23:1' column 3, row 2, is in state 1 and so on...
+To break it down, '2-2:1' means that column 2, row 2, is in state 1 (on), '2-3:1' column 3, row 2, is in state 1 and so on...
+
 Off tiles do not have to be declared, as the assumed state is off
 
 ## Version checklist (progress tracker)
