@@ -21,7 +21,7 @@ def tick(old_matrix):
     return new_matrix
 
 def from_random():
-    for y in Y_SIZE:
+    for y in range(Y_SIZE):
         for x in range(X_SIZE):
             MATRIX[y][x] = randrange(0,2)
 
@@ -53,9 +53,9 @@ def readable_matrix(matrix):
         new_matrix.append(row)
     return new_matrix
 
-Y_SIZE = 32
+Y_SIZE = 16
 # at 256x256 gets slow, might get slower on tkinter
-X_SIZE = 64
+X_SIZE = 32
 MATRIX = build_matrix()
 NEIGHBOURS = [
     (-1, -1),
@@ -76,4 +76,4 @@ while True:
     MATRIX = tick(MATRIX)
     end = time.time()
     print('tick time: {0:1.7f}s'.format(end-start))
-    time.sleep(.1)
+    time.sleep(.1)  # to stop do Ctrl+C in console
