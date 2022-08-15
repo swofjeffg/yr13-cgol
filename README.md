@@ -31,12 +31,6 @@ Generations can also be specified in the seed;
 ```
 
 To break it down, '(2,2)' means that column 2, row 2, is on, '(2,3)' column 3, row 2, is on and so on...
-Alternatively, you can just mention the coordinates of the tile you wish to be alive, a no given state exception will assume you entered the coordinates for the purpose of that tile being on.
-
-So if you really wanted to enter seeds quick, you could just write;
-```
-(2,2)(2,3)(3,2)(3,3)
-```
 
 Off tiles do not have to be declared, as the assumed state is off
 
