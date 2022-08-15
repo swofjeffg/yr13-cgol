@@ -41,10 +41,22 @@ def from_random():
         for x in range(X_SIZE):
             MATRIX[y][x] = randrange(0,2)
 
-def from_coordinates(cords):
-    for coordinate in cords:
-        x, y = coordinate[0], coordinate[1]
-        MATRIX[y][x] = 1
+def from_coordinates(cords):    # assuming cords are in specified coordinate form
+    try:
+        cords = (cords.split(')'))
+        del cords[-1]
+        for index, coordinates in enumerate(cords):
+            cords[index] = coordinates.split(',')
+        
+        if len(cords) == 0:
+            raise ValueError
+
+        for coordinate in cords:
+            coordinate[0] = coordinate[0].replace('(', '')
+            x, y = int(coordinate[0]), int(coordinate[1])
+            MATRIX[y-1][x-1] = 1
+    except:
+        return(0)
 
 def build_matrix():
     matrix = []
@@ -95,22 +107,33 @@ while flag == False:
 
 MATRIX = build_matrix()
     
+flag = False
+while flag == False:
+    rand_seed_question = input('Use random seed? (Y/N)\n')
+    if rand_seed_question[0].upper().strip() == 'Y':
+        from_random()
+        flag = True
+    elif rand_seed_question[0].upper().strip() == 'N':
+        while 1:
+            input_seed = input('Enter seed: (Enter coordinates | Type help for help)\n')
+            if input_seed.lower().strip() == 'help':
+                print('Consult github (swofjeffg/yr13-cgol)')
+            else:
+                try:
+                    if from_coordinates(input_seed) != None:
+                        raise ValueError
+                    else:
+                        flag = True
+                        break
+                except:
+                    print('Invalid seed input')
+    else:
+        print('Please type either Y or N')
 
-
-'''
-Y_SIZE = 16
-# at 256x256 gets slow, might get slower on tkinter
-X_SIZE = 32
-MATRIX = build_matrix()
-
-from_coordinates([[3,3], [3,4], [4,3], [4,4]])
-'''
-''' Infinite loop with no inputs, for debugging only
 while True:
     print('', *readable_matrix(MATRIX), sep = '\n')
     start = time.time()
     MATRIX = tick(MATRIX)
     end = time.time()
     print('tick time: {0:1.7f}s'.format(end-start))
-    time.sleep(.1)  # to stop do Ctrl+C in console
-'''
+    time.sleep(.7)  # to stop do Ctrl+C in console
