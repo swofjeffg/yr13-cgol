@@ -3,10 +3,13 @@ from random import randrange
 import time
 
 ROOT = Tk()
-MASTER = Frame(ROOT)
-MASTER.place(relx=.5, rely=.5, anchor=CENTER)
 
-X_SIZE, Y_SIZE = 16, 16
+X_SIZE, Y_SIZE = 256, 256 # how many columns and rows
+SCALE = 2   # how big is the whole canvas
+
+CANVAS = Canvas(ROOT, height=SCALE*X_SIZE, width=SCALE*Y_SIZE)
+CANVAS.place(relx=.5, rely=.5, anchor=CENTER)
+
 NEIGHBOURS = [
     (-1, -1),
     (-1, 0),
@@ -30,22 +33,31 @@ def build_matrix():
 def from_random():
     for y in range(Y_SIZE):
         for x in range(X_SIZE):
-            MATRIX[y][x] = randrange(0,2)
+            DATA_MATRIX[y][x] = randrange(0,2)
 
 def neighbour_count(x, y):
-    return sum(MATRIX[(y+j)%Y_SIZE][(x+i)%X_SIZE] \
+    return sum(DATA_MATRIX[(y+j)%Y_SIZE][(x+i)%X_SIZE] \
         for (i, j) in NEIGHBOURS)
 
 def display_grid():
+    matrix = []
     for y in range(Y_SIZE):
+        row = []
         for x in range(X_SIZE):
-            if MATRIX[x][y] == 1:
-                Label(MASTER, bg='#00ff00', width=2, height=1).grid(column=x, row=y)
+            top_left_x = x * SCALE  # create 4 points in which the rectangle sits in
+            bottom_right_x = x * SCALE + SCALE
+            top_left_y = y * SCALE
+            bottom_right_y = y * SCALE + SCALE
+            if DATA_MATRIX[x][y] == 1:
+                row.append(CANVAS.create_rectangle(top_left_x, top_left_y, bottom_right_x, bottom_right_y, fill='#00ff00', width=0))
             else:
-                Label(MASTER, bg='#000000', width=2, height=1).grid(column=x, row=y)
+                row.append(CANVAS.create_rectangle(top_left_x, top_left_y, bottom_right_x, bottom_right_y, fill='#000000', width=0))
+        matrix.append(row)
+    return matrix
 
 
-MATRIX = build_matrix()
+DATA_MATRIX = build_matrix()
+DISPLAY_MATRIX = display_grid()
 from_random()
 display_grid()
 
