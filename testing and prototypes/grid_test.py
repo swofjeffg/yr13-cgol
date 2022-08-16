@@ -4,8 +4,8 @@ import time
 
 ROOT = Tk()
 
-X_SIZE, Y_SIZE = 64, 64 # how many columns and rows
-SCALE = 4   # how big is the whole canvas
+X_SIZE, Y_SIZE = 256, 256 # how many columns and rows
+SCALE = 2   # how big is the whole canvas
 
 CANVAS = Canvas(ROOT, height=SCALE*X_SIZE, width=SCALE*Y_SIZE)
 CANVAS.place(relx=.5, rely=.5, anchor=CENTER)
@@ -26,6 +26,7 @@ class App():
         self.data_matrix = self.build_matrix()
         self.root = root
         self.from_random()
+        self.display_matrix = self.display_grid()
 
     def build_matrix(self):
         matrix = []
@@ -60,6 +61,16 @@ class App():
                     row.append(CANVAS.create_rectangle(top_left_x, top_left_y, bottom_right_x, bottom_right_y, fill='#aaaaaa', width=0))
             matrix.append(row)
         return matrix
+    
+    def configure_grid(self):
+        id = 0
+        for y in range(Y_SIZE):
+            for x in range(X_SIZE):
+                id += 1
+                if self.data_matrix[x][y] == 1:
+                    CANVAS.itemconfigure(id, fill='#00ff00')
+                else:
+                    CANVAS.itemconfigure(id, fill='#000000')
 
     def tick(self, old_matrix):
         new_matrix = []
@@ -79,10 +90,10 @@ class App():
     def controller(self):
         start = time.time()
         self.data_matrix = self.tick(self.data_matrix)
-        self.display_grid()
+        self.configure_grid()
         end = time.time()
         print('tick time: {0:1.7f}s'.format(end-start))
-        self.root.after(700, self.controller)
+        self.root.after(1, self.controller)
 
 if __name__ == '__main__':
     ROOT.update()
