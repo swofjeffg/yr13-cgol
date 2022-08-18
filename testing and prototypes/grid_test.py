@@ -2,16 +2,19 @@ from tkinter import *
 from random import randrange
 import time
 
+'''
+"Desired width" is the width of the program itself, and
+columns/rows refers to the number of columns/rows.
+'''
+DESIRED_WIDTH = 800
+COLUMNS, ROWS = int(round(128*1.5)), int(round(128))
+
+
 ROOT = Tk()
-
-X_SIZE, Y_SIZE = 256, 256 # how many columns and rows
-SCALE = 4   # how big is the whole canvas
-
-master = Frame(ROOT)
-
-CANVAS = Canvas(master, width=SCALE*X_SIZE, height=SCALE*Y_SIZE, bg='#111011')
+SCALE = DESIRED_WIDTH/COLUMNS
+master = Frame(ROOT, bg='#111011')
+CANVAS = Canvas(master, width=SCALE*COLUMNS, height=SCALE*ROWS, bg='#111011', highlightbackground='#111011')
 CANVAS.pack()
-
 master.place(relx=.5, rely=.5, anchor=CENTER)
 
 NEIGHBOURS = [
@@ -35,27 +38,27 @@ class App():
 
     def build_matrix(self):
         matrix = []
-        for _ in range(Y_SIZE):
+        for _ in range(ROWS):
             row = []
             matrix.append(row)
-            for _ in range(X_SIZE):
+            for _ in range(COLUMNS):
                 row.append(0)
         return matrix
 
     def from_random(self):
-        for y in range(Y_SIZE):
-            for x in range(X_SIZE):
+        for y in range(ROWS):
+            for x in range(COLUMNS):
                 self.data_matrix[y][x] = randrange(0,2)
 
     def neighbour_count(self, x, y):
-        return sum(self.data_matrix[(y+j)%Y_SIZE][(x+i)%X_SIZE] \
+        return sum(self.data_matrix[(y+j)%ROWS][(x+i)%COLUMNS] \
             for (i, j) in NEIGHBOURS)
 
     def display_grid(self):
         matrix = []
-        for y in range(Y_SIZE):
+        for y in range(ROWS):
             row = []
-            for x in range(X_SIZE):
+            for x in range(COLUMNS):
                 top_left_x = x * SCALE  # create 4 points in which the rectangle sits in
                 bottom_right_x = x * SCALE + SCALE
                 top_left_y = y * SCALE
@@ -69,8 +72,8 @@ class App():
     
     def configure_grid(self):
         id = 0
-        for y in range(Y_SIZE):
-            for x in range(X_SIZE):
+        for y in range(ROWS):
+            for x in range(COLUMNS):
                 id += 1
                 if self.data_matrix[y][x] == 1:
                     CANVAS.itemconfigure(id, fill='#099B4F')
@@ -79,9 +82,9 @@ class App():
 
     def tick(self, old_matrix):
         new_matrix = []
-        for y in range(Y_SIZE):
+        for y in range(ROWS):
             row = []
-            for x in range(X_SIZE):
+            for x in range(COLUMNS):
                 neighbours = self.neighbour_count(x, y)
                 if old_matrix[y][x] == 1 and (neighbours<2 or neighbours>3):
                     row.append(0)
@@ -106,7 +109,8 @@ class App():
 if __name__ == '__main__':
     ROOT.update()
     ROOT.minsize(ROOT.winfo_width(), ROOT.winfo_height())
-    ROOT.minsize(X_SIZE*SCALE,Y_SIZE*SCALE)
+    ROOT.minsize(int(round(COLUMNS*SCALE)),int(round(ROWS*SCALE)))
+    ROOT.config(bg='#111011')
     app = App(ROOT)
     app.controller()
     ROOT.mainloop()
