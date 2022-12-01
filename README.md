@@ -16,14 +16,14 @@ pip install pathlib
 ```
 
 ## 'settings.json' guide
-"max_columns" - Interger value of the maximum number of columns
-"max_rows" - Interger value of the maximum number of rows
-"desired_width" - Sets the width of the program to % of screenwidth
-"seed" - For a random seed; 'from_random' or 'random' will work, otherwise enter the name of the file where the seed is stored
-"primary_color" - The background color and most border colors
-"secondary_color" - The background color and most border colors
-"tertiary_color" - The background color and most border colors
-"alive_color" - The background color and most border colors
+"max_columns" - Interger value of the maximum number of columns <br />
+"max_rows" - Interger value of the maximum number of rows <br />
+"desired_width" - Sets the width of the program to % of screenwidth <br />
+"seed" - For a random seed; 'from_random' or 'random' will work, otherwise enter the name of the file where the seed is stored <br />
+"primary_color" - The background color and most border colors <br />
+"secondary_color" - The background color and most border colors <br />
+"tertiary_color" - The background color and most border colors <br />
+"alive_color" - The background color and most border colors <br />
 
 ## Seed formatting
 Seeds are stored in csv files, and must contain 1's and 0's.
