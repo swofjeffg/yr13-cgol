@@ -1,8 +1,8 @@
 from random import randrange
 import time
 
-Y_SIZE = 0
-X_SIZE = 0
+Y_SIZE = 128
+X_SIZE = 128*1.5
 
 
 NEIGHBOURS = [
@@ -17,8 +17,7 @@ NEIGHBOURS = [
 ]
 
 def neighbour_count(x, y):
-    return sum(MATRIX[(y+j)%Y_SIZE][(x+i)%X_SIZE] \
-        for (i, j) in NEIGHBOURS)
+    return sum(MATRIX[(y+j)%Y_SIZE][(x+i)%X_SIZE] for (i, j) in NEIGHBOURS)
 
 def tick(old_matrix):
     new_matrix = []

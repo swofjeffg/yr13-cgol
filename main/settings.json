@@ -1,12 +1,15 @@
 {
     "settings":{
-        "columns": 192,
-        "rows": 128,
-        "desired_width": 1300,
-        "intial_seed": "from_random",
-        "primary_colour": "#111111",
-        "secondary_colour": "#141414",
-        "tertiary_colour": "#C7C7C7",
-        "alive_colour": "#099B4F"
+        "max_columns": 32,
+        "max_rows": 16,
+        "minimum_columns": 4,
+        "minimum_rows": 4,
+        "desired_width": 75,
+        "seed": "from_random",
+        "primary_color": "#111111",
+        "secondary_color": "#141414",
+        "tertiary_color": "#C7C7C7",
+        "alive_color": "#099B4F",
+        "play_button_image": "playbutton.png"
     }
 }

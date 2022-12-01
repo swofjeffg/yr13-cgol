@@ -1,14 +1,15 @@
 from tkinter import *
 from random import randrange
 import time
+import math
 
 '''
 "Desired width" is the width of the program itself, and
 columns/rows refers to the number of columns/rows.
 '''
 
-DESIRED_WIDTH = 1300
-COLUMNS, ROWS = int(round(128*1.5)), int(round(128))
+DESIRED_WIDTH = 1000
+COLUMNS, ROWS = int(round(192/2)), int(round(128/2))
 
 
 ROOT = Tk()
@@ -29,17 +30,45 @@ NEIGHBOURS = [
     (1, 1)
 ]
 
-class App():
+class App:
     def __init__(self, root):
         self.root = root
         self.display_matrix = self.display_grid()
         self.from_random()
-        self.generations = 0
+        self.id = -1
+        CANVAS.bind('<Button-1>', self.canvas_click)
+        CANVAS.bind('<B1-Motion>', self.canvas_click)
+        self.play = True
+
+        self.button = Button(self.root, text='Pause', command=self.button_press)
+        self.button.pack()
+    
+    def button_press(self):
+        if self.play == True:
+            self.play = False
+            self.button.configure(text='Play')
+        else:
+            self.play = True
+            self.button.configure(text='Pause')
+    
+    def canvas_click(self, event):
+        clicked_box = ((math.ceil(event.x/SCALE)), math.ceil((event.y/SCALE)))
+        id = ((clicked_box[1]-1)*COLUMNS) + clicked_box[0]
+        if self.display_matrix[clicked_box[1]-1][clicked_box[0]-1] == 0 and self.id != id:
+            CANVAS.itemconfigure(id, fill='#099B4F')
+            self.display_matrix[clicked_box[1]-1][clicked_box[0]-1] = 1
+        elif self.display_matrix[clicked_box[1]-1][clicked_box[0]-1] == 1 and self.id != id:
+            CANVAS.itemconfigure(id, fill='#111111')
+            self.display_matrix[clicked_box[1]-1][clicked_box[0]-1] = 0
+        
+        self.id = id
+        
+        
 
     def from_random(self):
         for y in range(ROWS):
             for x in range(COLUMNS):
-                self.display_matrix[y][x] = randrange(0,2)
+                self.display_matrix[y][x] = randrange(0,1)
 
     def neighbour_count(self, x, y):
         return sum(self.display_matrix[(y+j)%ROWS][(x+i)%COLUMNS] for (i, j) in NEIGHBOURS)
@@ -78,14 +107,12 @@ class App():
         return new_matrix
     
     def controller(self):
-        self.generations += 1
-        start = time.time()
-        self.display_matrix = self.display_tick(self.display_matrix)
-        end = time.time()
-        print('tick time: {0:1.7f}s'.format(end-start))
-        if self.generations <= 10000:
-            print(self.generations)
-            self.root.after(1, self.controller)
+        if self.play == True:
+            start = time.time()
+            self.display_matrix = self.display_tick(self.display_matrix)
+            end = time.time()
+            #print('tick time: {0:1.7f}s'.format(end-start))
+        self.root.after(1, self.controller)
 
 if __name__ == '__main__':
     ROOT.update()

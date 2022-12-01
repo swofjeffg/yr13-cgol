@@ -1,45 +1,64 @@
 # Level 3 Computer Science GUI Project
 Project for YR13 computer science where I replicate Conway's game of life.
 
+## Dependancies
+Customtkinter:
+```
+pip install customtkinter
+```
+Pillow:
+```
+pip install pillow
+```
+Pathlib:
+```
+pip install pathlib
+```
+
+## 'settings.json' guide
+"max_columns" - Interger value of the maximum number of columns
+"max_rows" - Interger value of the maximum number of rows
+"desired_width" - Sets the width of the program to % of screenwidth
+"seed" - For a random seed; 'from_random' or 'random' will work, otherwise enter the name of the file where the seed is stored
+"primary_color" - The background color and most border colors
+"secondary_color" - The background color and most border colors
+"tertiary_color" - The background color and most border colors
+"alive_color" - The background color and most border colors
+
 ## Seed formatting
-The seed format requires a bit of explanation to understand how it fully works
-
-Say we have a 4x4 grid;
+Seeds are stored in csv files, and must contain 1's and 0's.
+Example:
 ```
-[0, 0, 0, 0]
-[0, 0, 0, 0]
-[0, 0, 0, 0]
-[0, 0, 0, 0]
+0,0,1
+1,0,1
+0,1,1
 ```
-
-And I want just the inner 2x2 grid to be on;
-```
-[0, 0, 0, 0]
-[0, 1, 1, 0]
-[0, 1, 1, 0]
-[0, 0, 0, 0]
-```
-
-The seed would be;
-```
-(2,2)(2,3)(3,2)(3,3)
-```
-
-Generations can also be specified in the seed;
-```
-... G10
-```
-
-To break it down, '(2,2)' means that column 2, row 2, is on, '(2,3)' column 3, row 2, is on and so on...
-
-Off tiles do not have to be declared, as the assumed state is off
+This seed will generate some console messages informing you that the seed will have rows and columns added as it is too small. But it is still a valid seed that will be accepted by the program as it contain's 1's and 0's in a csv type format.
 
 ## Version checklist (progress tracker)
 ### v0.00
 - [x] Created a working and reliable game engine
-- [ ] Created a save function, with seed readability
+- [x] Created a save function, with seed readability
 
 ### v0.10
-- [ ] Created basic skeleton GUI
-- [ ] Easy to generate/enter seeds
-- [ ] Basic grid displaying CGOL (Conway's game of life)
+- [x] Created console tests
+- [x] Easy to generate/enter seeds
+- [x] Basic grid displaying CGOL (Conway's game of life)
+
+### v0.50
+- [x] Created manipulatable grid (draw mode)
+- [x] Easy to generate/enter seeds
+- [x] Basic grid displaying CGOL (Conway's game of life)
+
+### v0.55
+- [x] Created basic GUI (shoved everything all together)
+
+### v0.90
+- [x] Created GUI according to mockups (cancelled due to feedback)
+- [x] Full functional GUI
+
+### v1.00
+- [x] Optimised code
+- [x] Made code more readable
+- [x] Correct code formatting
+- [x] Made sure code is efficent
